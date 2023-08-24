@@ -12,6 +12,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ValidRoles } from 'src/auth/enums/valid-roles.enum';
 import { UpdateUserInput } from './dto/update-user.input';
+import { ItemsService } from '../items/items.service';
 
 @Injectable()
 export class UsersService {
@@ -70,19 +71,19 @@ export class UsersService {
   async update(
     id: string,
     updateUserInput: UpdateUserInput,
-    userReq: User
-    ): Promise<User> {
-      try {
-        const user = await this.usersRepository.preload({ 
-          ...updateUserInput,
-           id 
-          });
-        user.lastUpdateBy = userReq;
+    userReq: User,
+  ): Promise<User> {
+    try {
+      const user = await this.usersRepository.preload({
+        ...updateUserInput,
+        id,
+      });
+      user.lastUpdateBy = userReq;
 
-        return this.usersRepository.save(user);
-      } catch (error) {
-         this.handleErrors(error);
-      }
+      return this.usersRepository.save(user);
+    } catch (error) {
+      this.handleErrors(error);
+    }
   }
 
   async block(id: string, user: User): Promise<User> {
