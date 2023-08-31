@@ -6,6 +6,8 @@ import { UsersModule } from 'src/users/users.module';
 
 import { SeedService } from './seed.service';
 import { SeedResolver } from './seed.resolver';
+import { ListItemModule } from 'src/list-item/list-item.module';
+import { ListsModule } from 'src/lists/lists.module';
 
 
 
@@ -14,7 +16,9 @@ import { SeedResolver } from './seed.resolver';
   imports: [ 
     ConfigModule,
     UsersModule,
-    ItemsModule
+    ItemsModule,
+    ListItemModule,
+    ListsModule
    ]
 })
 export class SeedModule {}

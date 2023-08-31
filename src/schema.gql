@@ -2,6 +2,23 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type ListItem {
+  id: ID!
+  quantity: Float!
+  completed: Boolean!
+  list: List!
+  item: Item!
+}
+
+type List {
+  id: ID!
+  name: String!
+  user: User!
+  listsCount: Int!
+  items(offset: Int = 0, limit: Int = 10, search: String): [ListItem!]!
+  totalItems: Float!
+}
+
 type User {
   id: ID!
   fullName: String!
@@ -10,7 +27,9 @@ type User {
   isActive: Boolean!
   lastUpdateBy: User
   itemCount: Int!
+  listCount: Int!
   items(offset: Int = 0, limit: Int = 10, search: String): [Item!]!
+  lists(offset: Int = 0, limit: Int = 10, search: String): [Item!]!
 }
 
 type Item {
@@ -18,6 +37,7 @@ type Item {
   name: String!
   quantityUnits: String
   user: User!
+  listItem: [ListItem!]!
 }
 
 type AuthResponse {
@@ -30,7 +50,9 @@ type Query {
   users(roles: [ValidRoles!]! = []): [User!]!
   user(id: ID!): User!
   items(offset: Int = 0, limit: Int = 10, search: String): [Item!]!
-  item(id: ID!): Item!
+  lists(offset: Int = 0, limit: Int = 10, search: String): [List!]!
+  list(id: ID!): List!
+  listItem(id: String!): ListItem!
 }
 
 enum ValidRoles {
@@ -45,8 +67,11 @@ type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): User!
   blockUser(id: ID!): User!
   createItem(createItemInput: CreateItemInput!): Item!
-  updateItem(updateItemInput: UpdateItemInput!): Item!
-  removeItem(id: ID!): Item!
+  createList(createListInput: CreateListInput!): List!
+  updateList(updateListInput: UpdateListInput!): List!
+  removeList(id: ID!): List!
+  createListItem(createListItemInput: CreateListItemInput!): ListItem!
+  updateListItem(updateListItemInput: UpdateListItemInput!): ListItem!
 
   """Execute the build of the data base"""
   executeSeed: Boolean!
@@ -77,8 +102,26 @@ input CreateItemInput {
   quantityUnits: String
 }
 
-input UpdateItemInput {
-  name: String
-  quantityUnits: String
+input CreateListInput {
+  name: ID!
+}
+
+input UpdateListInput {
+  name: ID
+  id: ID!
+}
+
+input CreateListItemInput {
+  quantity: Float = 0
+  completed: Boolean = false
+  listId: ID!
+  itemId: ID!
+}
+
+input UpdateListItemInput {
+  quantity: Float = 0
+  completed: Boolean = false
+  listId: ID
+  itemId: ID
   id: ID!
 }

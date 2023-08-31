@@ -36,27 +36,27 @@ export class ItemsResolver {
     return this.itemsService.findAll(user, paginationArgs, searchArgs);
   }
 
-  @Query(() => Item, { name: 'item' })
-  async findOne(
-    @Args('id', { type: () => ID }, ParseUUIDPipe) id: string,
-    @CurrentUser() user: User,
-  ): Promise<Item> {
-    return this.itemsService.findOne(id, user);
-  }
+  // @Query(() => Item, { name: 'item' })
+  // async findOne(
+  //   @Args('id', { type: () => ID }, ParseUUIDPipe) id: string,
+  //   @CurrentUser() user: User,
+  // ): Promise<Item> {
+  //   return this.itemsService.findOne(id, user);
+  // }
 
-  @Mutation(() => Item)
-  async updateItem(
-    @Args('updateItemInput') updateItemInput: UpdateItemInput,
-    @CurrentUser() user: User,
-  ): Promise<Item> {
-    return this.itemsService.update(updateItemInput.id, updateItemInput, user);
-  }
+  // @Mutation(() => Item)
+  // async updateItem(
+  //   @Args('updateItemInput') updateItemInput: UpdateItemInput,
+  //   @CurrentUser() user: User,
+  // ): Promise<Item> {
+  //   return this.itemsService.update(updateItemInput.id, updateItemInput, user);
+  // }
 
-  @Mutation(() => Item)
-  async removeItem(
-    @Args('id', { type: () => ID }) id: string,
-    @CurrentUser() user: User,
-    ): Promise<Item> {
-    return this.itemsService.remove(id, user);
-  }
+  // @Mutation(() => Item)
+  // async removeItem(
+  //   @Args('id', { type: () => ID }) id: string,
+  //   @CurrentUser() user: User,
+  //   ): Promise<Item> {
+  //   return this.itemsService.remove(id, user);
+  // }
 }
